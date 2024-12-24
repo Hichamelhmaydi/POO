@@ -1,3 +1,10 @@
+<?php
+
+echo $_SESSION["id"];
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>

@@ -1,7 +1,7 @@
 <?php
 include("connc.php");
 $nom =$_POST['nom'];
-$prenom =$_POST['prenom'];
+session_start();
 $prenom =$_POST['prenom'];
 $Identite=$_POST['Identite'];
 // $new_nom=$_POST['new_nom'];
@@ -10,10 +10,15 @@ $Identite=$_POST['Identite'];
 
 $stmt = $mysqli->prepare("INSERT INTO utilisateur (nom, prenom,identite) VALUES (?, ?,?)");
 $stmt->bind_param("sss", $nom, $prenom,$Identite); 
-if ($stmt->execute()) {
+$stmt->execute();
+
+    $stmt1 = $mysqli->query("SELECT id_utilisateur from utilisateur where nom  = $nom and prenom =$prenom and identite = $Identite");
+    $stmt1->execute();
+    $result = $stmt1->fetch_assoc();
+    $_SESSION["id"] = $result["id"];
     echo "Données insérées avec succès.";
     header("Location: reservation.php");
     exit;
-} 
-$stmt->close();
+
+
 ?>
